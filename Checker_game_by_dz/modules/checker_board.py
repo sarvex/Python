@@ -23,10 +23,10 @@ class checker_board:
             for col in range(row % 2, cols, 2):
                 pg.draw.rect(window, yellow, (row * sq_size, col * sq_size, sq_size, sq_size))
 
-    def move (self, piece, row, col):
+    def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
-        if (row == rows - 1 or row == 0):
+        if row in [rows - 1, 0]:
             piece.make_king()
             if (piece.color == white):
                 self.white_k += 1
@@ -66,7 +66,7 @@ class checker_board:
         row = piece.row
 
         if (piece.color == black or piece.king):
-            moves.update(self._traverse_l(row - 1, max(row - 3, -1), -1, piece.color, l))
+            moves |= self._traverse_l(row - 1, max(row - 3, -1), -1, piece.color, l)
             moves.update(self._traverse_r(row - 1, max(row - 3, -1), -1, piece.color, r))
 
         if (piece.color == white or piece.king):
@@ -92,7 +92,7 @@ class checker_board:
         return None
 
     # Traversal Left
-    def _traverse_l (self, start, stop, step, color, l, skip = []):
+    def _traverse_l(self, start, stop, step, color, l, skip = []):
         moves = {}
         last = []
         for r in range(start, stop, step):
@@ -107,12 +107,9 @@ class checker_board:
                 else:
                     moves[(r, l)] = last
 
-                if (last):
-                    if (step == -1):
-                        row = max(r - 3, 0)
-                    else:
-                        row = min(r + 3, rows)
-                    moves.update(self._traverse_l(r + step, row, step, color, l - 1, skip = last))
+                if last:
+                    row = max(r - 3, 0) if (step == -1) else min(r + 3, rows)
+                    moves |= self._traverse_l(r + step, row, step, color, l - 1, skip = last)
                     moves.update(self._traverse_r(r + step, row, step, color, l + 1, skip = last))
                 break
 
@@ -124,7 +121,7 @@ class checker_board:
         return moves
 
     # Traversal Right
-    def _traverse_r (self, start, stop, step, color, right, skip = []):
+    def _traverse_r(self, start, stop, step, color, right, skip = []):
         moves = {}
         last = []
         for r in range(start, stop, step):
@@ -139,12 +136,9 @@ class checker_board:
                 else:
                     moves[(r, right)] = last
 
-                if (last):
-                    if (step == -1):
-                        row = max(r - 3, 0)
-                    else:
-                        row = min(r + 3, rows)
-                    moves.update(self._traverse_l(r + step, row, step, color, right - 1, skip = last))
+                if last:
+                    row = max(r - 3, 0) if (step == -1) else min(r + 3, rows)
+                    moves |= self._traverse_l(r + step, row, step, color, right - 1, skip = last)
                     moves.update(self._traverse_r(r + step, row, step, color, right + 1, skip = last))
                 break
 

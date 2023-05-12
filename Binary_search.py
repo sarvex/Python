@@ -27,14 +27,13 @@ if __name__ == "__main__":
     # User input array
     print("Enter the array with comma separated in which element will be searched")
     arr =[int(x) for x in input().split(',')] #the input array will of int type with each element seperated with a comma due to the split fucntion
-                                       #map function returns a list of results after applying the given function to each item
     x = eval(input("Enter the element you want to search in given array"))
 
     # Function call
     result = binarySearch(arr, 0, len(arr) - 1, x)
-     
+
     #printing the output
     if result != -1:
-        print("Element is present at index {}".format(result))
+        print(f"Element is present at index {result}")
     else:
         print("Element is not present in array")

@@ -33,7 +33,7 @@ def get_credentials():
         flow.user_agent = APPLICATION_NAME
         credentials = tools.run_flow(flow, store)
 
-        print('Storing credentials to ' + credential_path)
+        print(f'Storing credentials to {credential_path}')
 
     return credentials
 
@@ -46,19 +46,18 @@ def SendMessage(sender, to, subject, msgHtml, msgPlain, attachmentFile=None):
         message1 = createMessageWithAttachment(sender, to, subject, msgHtml, msgPlain, attachmentFile)
     else:
         message1 = CreateMessageHtml(sender, to, subject, msgHtml, msgPlain)
-    result = SendMessageInternal(service, "me", message1)
-    return result
+    return SendMessageInternal(service, "me", message1)
 
 
 def SendMessageInternal(service, user_id, message):
     try:
         message = (service.users().messages().send(userId=user_id, body=message).execute())
 
-        print('Message Id: %s' % message['id'])
+        print(f"Message Id: {message['id']}")
 
         return message
     except errors.HttpError as error:
-        print('An error occurred: %s' % error)
+        print(f'An error occurred: {error}')
         return "Error"
     return "OK"
 
@@ -101,20 +100,17 @@ def createMessageWithAttachment(
     if main_type == 'text':
         fp = open(attachmentFile, 'rb')
         msg = MIMEText(fp.read(), _subtype=sub_type)
-        fp.close()
     elif main_type == 'image':
         fp = open(attachmentFile, 'rb')
         msg = MIMEImage(fp.read(), _subtype=sub_type)
-        fp.close()
     elif main_type == 'audio':
         fp = open(attachmentFile, 'rb')
         msg = MIMEAudio(fp.read(), _subtype=sub_type)
-        fp.close()
     else:
         fp = open(attachmentFile, 'rb')
         msg = MIMEBase(main_type, sub_type)
         msg.set_payload(fp.read())
-        fp.close()
+    fp.close()
     filename = os.path.basename(attachmentFile)
     msg.add_header('Content-Disposition', 'attachment', filename=filename)
     message.attach(msg)

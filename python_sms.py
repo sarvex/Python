@@ -20,7 +20,7 @@ scripts = os.getenv("scripts")
 dbfile = ("database/maindatabase.db")
 master_db = os.path.join(dropbox, dbfile)
 
-f = open(scripts + '/output/student.txt', 'a')
+f = open(f'{scripts}/output/student.txt', 'a')
 
 tdate = strftime("%d-%m")
 
@@ -30,13 +30,12 @@ loc_stmt = 'SELECT name, number from table'
 cursor.execute(loc_stmt)
 while True:
     row = cursor.fetchone()
-    if row == None:
+    if row is None:
         break
     sname = row[0]
     snumber = row[1]
 
-    message = (
-                sname + ' There will be NO training tonight on the ' + tdate + ' Sorry for the late notice, I have sent a mail as well, just trying to reach everyone, please do not reply to this message as this is automated')
+    message = f'{sname} There will be NO training tonight on the {tdate} Sorry for the late notice, I have sent a mail as well, just trying to reach everyone, please do not reply to this message as this is automated'
 
     username = 'YOUR_USERNAME'
     sender = 'WHO_IS_SENDING_THE_MAIL'
@@ -64,8 +63,8 @@ while True:
     postdata = urllib.urlencode(values)
     req = urllib2.Request(url, postdata)
 
-    print('Attempting to send SMS to ' + sname + ' at ' + snumber + ' on ' + tdate)
-    f.write('Attempting to send SMS to ' + sname + ' at ' + snumber + ' on ' + tdate + '\n')
+    print(f'Attempting to send SMS to {sname} at {snumber} on {tdate}')
+    f.write(f'Attempting to send SMS to {sname} at {snumber} on {tdate}' + '\n')
 
     try:
         response = urllib2.urlopen(req)

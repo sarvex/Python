@@ -2,6 +2,7 @@
 Created on Thu Apr 27 16:28:36 2017
 @author: barnabysandeford
 """
+
 # Currently works for Safari, but just change to whichever 
 # browser you're using.
 
@@ -38,11 +39,11 @@ except Exception as e:
 driver = webdriver.Safari()
 
 if url.startswith("https://"):
-    driver.get(url)
+	driver.get(url)
 else:
-    driver.get("https://" + url)
+	driver.get(f"https://{url}")
 
-for i in range(count):
-    # Sets the page to refresh at the refreshrate.
-    time.sleep(refreshrate)
-    driver.refresh()
+for _ in range(count):
+	# Sets the page to refresh at the refreshrate.
+	time.sleep(refreshrate)
+	driver.refresh()

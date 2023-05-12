@@ -1,9 +1,11 @@
 # coding: utf-8
 def my_found(req):
     my_dict = {'XXS':[42, 36, 8, 38, 24], 'XS':(2), 'S':(4), 'M':(6), 'L':(8), 'XL':(10), 'XXL':(12), 'XXXL':(14)}
-    if req[0] != 'XXS': answ = my_dict['XXS'][req[1]-1]+my_dict[req[0]]
-    else: answ = my_dict['XXS'][req[1]-1]
-    return answ
+    return (
+        my_dict['XXS'][req[1] - 1] + my_dict[req[0]]
+        if req[0] != 'XXS'
+        else my_dict['XXS'][req[1] - 1]
+    )
 
 country = {1:'Россия', 2:'Германия', 3:'США', 4:'Франция', 5:'Великобритания'}
 

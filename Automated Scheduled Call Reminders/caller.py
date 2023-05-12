@@ -26,22 +26,22 @@ database_reference = db.collection('on_call')
 def search():
 
     calling_time = datetime.now()
-    one_hours_from_now = (calling_time + timedelta(hours=1)).strftime('%H:%M:%S')  
+    one_hours_from_now = (calling_time + timedelta(hours=1)).strftime('%H:%M:%S')
     current_date=str(strftime("%d-%m-%Y", gmtime()))
     docs = db.collection(u'on_call').where(u'date',u'==',current_date).stream()
     list_of_docs=[]
     for doc in docs:
-        
+
         c=doc.to_dict()
         if (calling_time).strftime('%H:%M:%S')<=c['from']<=one_hours_from_now:
             list_of_docs.append(c)
     print(list_of_docs)
 
-    while(list_of_docs):
+    while list_of_docs:
         timestamp=datetime.now().strftime('%H:%M')
         five_minutes_prior= (timestamp + timedelta(minutes=5)).strftime('%H:%M')
         for doc in list_of_docs:
-            if doc['from'][0:5]==five_minutes_prior:
+            if doc['from'][:5] == five_minutes_prior:
                 phone_number= doc['phone']
                 call = client.calls.create(
                 to=phone_number,

@@ -82,13 +82,10 @@ def add():
     print("")
 
 
-    File=open('Management.txt','r')
-    string=File.read()
-    string = string.replace("\'", "\"")
-    dictionary=json.loads(string)
-    File.close()
-
-
+    with open('Management.txt','r') as File:
+        string=File.read()
+        string = string.replace("\'", "\"")
+        dictionary=json.loads(string)
     if len(dictionary.get('Room'))==0:
         Room_num='501'
     else:
@@ -108,10 +105,8 @@ def add():
     dictionary['Price'].append(Money)
     dictionary['Room'].append(Room_num)
 
-    File=open("Management.txt",'w',encoding="utf-8")
-    File.write(str(dictionary))
-    File.close()
-
+    with open("Management.txt",'w',encoding="utf-8") as File:
+        File.write(str(dictionary))
     print("")
     print("Your data has been successfully added to our database.")
 
@@ -122,31 +117,27 @@ def add():
 import os
 import json
 filecheck = os.path.isfile('Management.txt')
-if filecheck == False :
-    File = open("Management.txt", 'a', encoding="utf-8")
-    temp1 = {'First_Name': [], 'Last_Name': [], 'Phone_num': [], 'Room_Type': [], 'Days': [], 'Price': [], 'Room':[]}
-    File.write(str(temp1))
-    File.close()
+if filecheck == False:
+    with open("Management.txt", 'a', encoding="utf-8") as File:
+        temp1 = {'First_Name': [], 'Last_Name': [], 'Phone_num': [], 'Room_Type': [], 'Days': [], 'Price': [], 'Room':[]}
+        File.write(str(temp1))
 
 
 
 def modify():
 
-    File=open('Management.txt','r')
-    string=File.read()
-    string = string.replace("\'", "\"")
-    dictionary=json.loads(string)
-    File.close()
-
+    with open('Management.txt','r') as File:
+        string=File.read()
+        string = string.replace("\'", "\"")
+        dictionary=json.loads(string)
     dict_num=dictionary.get("Room")
     dict_len=len(dict_num)
+    print("")
     if dict_len==0:
-        print("")
         print("There is no data in our database")
         print("")
         menu()
     else:
-        print("")
         Room=(input("Enter your Room Number: "))
 
         listt=dictionary['Room']
@@ -197,21 +188,18 @@ def modify():
 
 def search():
 
-    File=open('Management.txt','r')
-    string=File.read()
-    string = string.replace("\'", "\"")
-    dictionary=json.loads(string)
-    File.close()
-
+    with open('Management.txt','r') as File:
+        string=File.read()
+        string = string.replace("\'", "\"")
+        dictionary=json.loads(string)
     dict_num=dictionary.get("Room")
     dict_len=len(dict_num)
+    print("")
     if dict_len==0:
-        print("")
         print("There is no data in our database")
         print("")
         menu()
     else:
-        print("")
         Room = (input("Enter your Room Number: "))
         print("")
 
@@ -238,21 +226,18 @@ def search():
         exit_menu()
 
 def remove():
-    File=open('Management.txt','r')
-    string=File.read()
-    string = string.replace("\'", "\"")
-    dictionary=json.loads(string)
-    File.close()
-
+    with open('Management.txt','r') as File:
+        string=File.read()
+        string = string.replace("\'", "\"")
+        dictionary=json.loads(string)
     dict_num=dictionary.get("Room")
     dict_len=len(dict_num)
+    print("")
     if dict_len==0:
-        print("")
         print("There is no data in our database")
         print("")
         menu()
     else:
-        print("")
         Room = (input("Enter your Room Number: "))
         print("")
 
@@ -296,22 +281,18 @@ def remove():
         dictionary['Room']=None
         dictionary['Room']=listt_num
 
-        file1=open('Management.txt','w',encoding="utf-8")
-        file1.write(str(dictionary))
-        file1.close()
-
+        with open('Management.txt','w',encoding="utf-8") as file1:
+            file1.write(str(dictionary))
         print("Details has been removed successfully")
 
         exit_menu()
 
 def view():
 
-    File=open('Management.txt','r')
-    string=File.read()
-    string = string.replace("\'", "\"")
-    dictionary=json.loads(string)
-    File.close()
-
+    with open('Management.txt','r') as File:
+        string=File.read()
+        string = string.replace("\'", "\"")
+        dictionary=json.loads(string)
     dict_num=dictionary.get("Room")
     dict_len=len(dict_num)
     if dict_len==0:
@@ -344,7 +325,7 @@ def view():
             print('Room Number:', listt_num[index])
             print("")
 
-            index=index+1
+            index += 1
 
         exit_menu()
 

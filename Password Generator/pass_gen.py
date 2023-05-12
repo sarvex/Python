@@ -6,18 +6,13 @@ class PasswordGenerator():
     @staticmethod
     def gen_sequence(conditions): #must have  conditions (in a list format), for each member of the list possible_characters
         possible_characters=[str.ascii_lowercase, str.ascii_uppercase, str.digits, str.punctuation]
-        sequence=""
-        for x in range(len(conditions)):
-            if conditions[x]:
-                sequence+=possible_characters[x]
-            else:
-                pass
-        return sequence
+        return "".join(
+            possible_characters[x] for x in range(len(conditions)) if conditions[x]
+        )
 
     @staticmethod
     def gen_password(sequence, passlength=8):
-        password = ''.join((secrets.choice(sequence) for i in range(passlength)))
-        return password
+        return ''.join(secrets.choice(sequence) for _ in range(passlength))
 
 class Interface():
     has_characters={
@@ -45,10 +40,7 @@ class Interface():
         print(PasswordGenerator.gen_password(sequence, lenght))
 
 def list_to_vertical_string(list):
-    to_return =""
-    for member in list:
-        to_return += f"{member}\n"
-    return to_return
+    return "".join(f"{member}\n" for member in list)
 
 class Run():
     def decide_operation(self):

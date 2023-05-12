@@ -5,10 +5,7 @@ vowels = ["a", "e", "i", "o", "u"]
 vowelscounter = 0
 
 def checkVowels(letter):
-    for i in range(len(vowels)):
-        if letter == vowels[i]:
-            return True
-    return False
+    return any(letter == vowels[i] for i in range(len(vowels)))
 
 for i in range(len(string)):
     if checkVowels(string[i]):

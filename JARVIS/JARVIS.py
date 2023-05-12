@@ -102,7 +102,7 @@ class Jarvis:
         
         Later on this can also be used by the user itself to add or update their preferred apps.
         '''
-        _dict = dict(
+        return dict(
             time=datetime.now(),
             notepad='Notepad.exe',
             calculator='calc.exe',
@@ -112,7 +112,6 @@ class Jarvis:
             cmd='cmd.exe',
             browser='C:\Program Files\Internet Explorer\iexplore.exe',
         )
-        return _dict
 
     @property
     def get_app(self):
@@ -136,7 +135,7 @@ def get_app(Q):
         voice(x)
     elif Q=="news":
         speak_news()
-            
+
     elif Q == "open notepad":
         subprocess.call(['Notepad.exe'])
     elif Q == "open calculator":
@@ -153,7 +152,6 @@ def get_app(Q):
         subprocess.call(['discord.exe'])
     elif Q == "open browser":
         subprocess.call(['C:\Program Files\Internet Explorer\iexplore.exe'])
-# patch-1
     elif Q == "open youtube":
         webbrowser.open("https://www.youtube.com/")   # open youtube
     elif Q == "open google":
@@ -174,43 +172,38 @@ def get_app(Q):
             except Exception as e:
                 print(e)
                 speak("Sorry, I can't send the email.")
-# =======
-#   master
     elif Q=="Take screenshot":
         snapshot=ImageGrab.grab()
         drive_letter = "C:\\"
-        folder_name = r'downloaded-files'
         folder_time = datetime.datetime.now().strftime("%Y-%m-%d_%I-%M-%S_%p")
-        extention = '.jpg'
-        folder_to_save_files = drive_letter + folder_name + folder_time + extention
+        folder_to_save_files = f'{drive_letter}downloaded-files{folder_time}.jpg'
         snapshot.save(folder_to_save_files)
-     
+
     elif Q=="Jokes":
         speak(pyjokes.get_joke())
-        
+
     elif Q=="start recording":
         current.add('Win', 'Alt', 'r')
         speak("Started recording. just say stop recording to stop.")
-        
+
     elif Q=="stop recording":
         current.add('Win', 'Alt', 'r')
         speak("Stopped recording. check your game bar folder for the video")
-        
+
     elif Q=="clip that":
          current.add('Win', 'Alt', 'g')
             speak("Clipped. check you game bar file for the video")
          with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
               listener.join()
-                  
-    
-               
-              
 
-# master
+
+
+
+
     else:
         engine.say("Sorry Try Again")
         engine.runAndWait()
-   
+
 # =======
 # =======
 
@@ -226,11 +219,10 @@ def get_app(Q):
     }
 # master
 
-    for app in apps:
+    for app, value in apps.items():
         if app == Q.lower():
-            subprocess.call([apps[app]])
+            subprocess.call([value])
             break
-    # master
     else:
         engine.say("Sorry Try Again")
         engine.runAndWait()

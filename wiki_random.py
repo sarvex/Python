@@ -14,12 +14,12 @@ Usage:
 
 enter index of article you would like to see, or 'r' for retry and 'n' for exit.
 '''
+
 import requests
 import webbrowser
 
 page_count = 10
-url = 'https://en.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&rnlimit=' + str(
-    page_count) + '&format=json'
+url = f'https://en.wikipedia.org/w/api.php?action=query&list=random&rnnamespace=0&rnlimit={page_count}&format=json'
 
 
 def load():
@@ -28,7 +28,7 @@ def load():
         jsonData = response.json()['query']['random']
         print("10 Random generted WIKI pages...")
         for idx, j in enumerate(jsonData):
-            print(str(idx) + ": ", j['title'])
+            print(f"{str(idx)}: ", j['title'])
         i = input("Which page you want to see, enter index..[r: for retry,n: exit]?").lower()
         if i == 'r':
             print('Loading randoms again...')

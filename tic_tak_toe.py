@@ -15,12 +15,9 @@ def create_board():
 # Check for empty places on board 
 def possibilities(board): 
 	l = [] 
-	
+
 	for i in range(len(board)): 
-		for j in range(len(board)): 
-			
-			if board[i][j] == 0: 
-				l.append((i, j)) 
+		l.extend((i, j) for j in range(len(board)) if board[i][j] == 0)
 	return(l) 
 
 # Select a random place for the player 
@@ -34,42 +31,27 @@ def random_place(board, player):
 # of their marks in a horizontal row 
 def row_win(board, player): 
 	for x in range(len(board)): 
-		win = True
-		
-		for y in range(len(board)): 
-			if board[x, y] != player: 
-				win = False
-				continue
-				
-		if win == True: 
-			return(win) 
+		win = all(board[x, y] == player for y in range(len(board)))
+		if win: 
+			return(win)
 	return(win) 
 
 # Checks whether the player has three 
 # of their marks in a vertical row 
 def col_win(board, player): 
 	for x in range(len(board)): 
-		win = True
-		
-		for y in range(len(board)): 
-			if board[y][x] != player: 
-				win = False
-				continue
-				
-		if win == True: 
-			return(win) 
+		win = all(board[y][x] == player for y in range(len(board)))
+		if win: 
+			return(win)
 	return(win) 
 
 # Checks whether the player has three 
 # of their marks in a diagonal row 
 def diag_win(board, player): 
-	win = True
 	y = 0
-	for x in range(len(board)): 
-		if board[x, x] != player: 
-			win = False
+	win = all(board[x, x] == player for x in range(len(board)))
 	if win: 
-		return win 
+		return win
 	win = True
 	if win: 
 		for x in range(len(board)): 
@@ -97,20 +79,20 @@ def evaluate(board):
 # Main function to start the game 
 def play_game(): 
 	board, winner, counter = create_board(), 0, 1
-	print(board) 
+	print(board)
 	sleep(2) 
-	
+
 	while winner == 0: 
 		for player in [1, 2]: 
-			board = random_place(board, player) 
-			print("Board after " + str(counter) + " move") 
-			print(board) 
-			sleep(2) 
+			board = random_place(board, player)
+			print(f"Board after {str(counter)} move")
+			print(board)
+			sleep(2)
 			counter += 1
-			winner = evaluate(board) 
+			winner = evaluate(board)
 			if winner != 0: 
 				break
 	return(winner) 
 
 # Driver Code 
-print("Winner is: " + str(play_game())) 
+print(f"Winner is: {str(play_game())}") 

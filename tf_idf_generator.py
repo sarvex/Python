@@ -97,26 +97,23 @@ def find_tf_idf(file_names=['./../test/testdata'], prev_file_path=None, dump_pat
 
     for f in file_names:
 
-        file1 = open(f, 'r')  # never use 'rb' for textual data, it creates something like,  {b'line-inside-the-doc'}
-
-        # create word_count dict for all docs
-        for line in file1:
-            dict = {}
-            # find the amount of doc a word is in
-            for i in set(line.split()):
-                if i in idf:
-                    idf[i] += 1
-                else:
-                    idf[i] = 1
-            for word in line.split():
-                # find the count of all words in every doc
-                if word not in dict:
-                    dict[word] = 1
-                else:
-                    dict[word] += 1
-            tf_idf.append(dict)
-        file1.close()
-
+        with open(f, 'r') as file1:
+            # create word_count dict for all docs
+            for line in file1:
+                dict = {}
+                # find the amount of doc a word is in
+                for i in set(line.split()):
+                    if i in idf:
+                        idf[i] += 1
+                    else:
+                        idf[i] = 1
+                for word in line.split():
+                    # find the count of all words in every doc
+                    if word not in dict:
+                        dict[word] = 1
+                    else:
+                        dict[word] += 1
+                tf_idf.append(dict)
     # calculating final TF-IDF values  for all words in all docs(line in a doc in this case)
     for doc in tf_idf:
         for key in doc:
@@ -125,15 +122,29 @@ def find_tf_idf(file_names=['./../test/testdata'], prev_file_path=None, dump_pat
             doc[key] = true_tf * true_idf
 
     # do not get overwhelmed, just for logging the quantity of words that have been processed.
-    print(TAG, 'Total number of unique words in corpus', len(idf),
-          '( ' + paint('++' + str(len(idf) - prev_doc_count), 'g') + ' )' if prev_file_path else '')
-    print(TAG, 'Total number of docs in corpus:', len(tf_idf),
-          '( ' + paint('++' + str(len(tf_idf) - prev_corpus_length), 'g') + ' )' if prev_file_path else '')
+    print(
+        TAG,
+        'Total number of unique words in corpus',
+        len(idf),
+        '( ' + paint(f'++{str(len(idf) - prev_doc_count)}', 'g') + ' )'
+        if prev_file_path
+        else '',
+    )
+    print(
+        TAG,
+        'Total number of docs in corpus:',
+        len(tf_idf),
+        '( ' + paint(f'++{str(len(tf_idf) - prev_corpus_length)}', 'g') + ' )'
+        if prev_file_path
+        else '',
+    )
 
     # dump if a dir-path is given
     if dump_path:
-        if dump_path[-8:] != 'tfidfpkl': raise Exception(
-            TAG + "Please provide a .tfidfpkl file_path, it is the standard format of this module.")
+        if dump_path[-8:] != 'tfidfpkl':
+            raise Exception(
+                f"{TAG}Please provide a .tfidfpkl file_path, it is the standard format of this module."
+            )
         pickle.dump((idf, tf_idf), open(dump_path, 'wb'), protocol=pickle.HIGHEST_PROTOCOL)
         print(TAG, 'Dumping TF-IDF vars @', dump_path)
     return idf, tf_idf

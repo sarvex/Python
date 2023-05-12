@@ -22,7 +22,7 @@ class Tubes(Thread):
         # Verifica os parâmetros passados e lança um erro caso algo esteja incorreto
         if not isinstance(background, Background): raise TypeError(
             "The background argument must be an instance of Background.")
-        if not len(fp) == 2: raise TypeError(
+        if len(fp) != 2: raise TypeError(
             "The parameter fp should be a sequence containing the path of the images of the tube body and the tube mouth.")
         if not isinstance(bird, Bird): raise TypeError("The birdargument must be an instance of Bird.")
         if not callable(score_function): raise TypeError("The score_function argument must be a callable object.")
@@ -84,9 +84,6 @@ class Tubes(Thread):
         Método para criar 2 novos tubos (baixo e cima) numa mesma posição X
         """
 
-        # Cria uma lista para armazenar as partes do corpo do tubo de cima
-        tube1 = []
-
         # Define a posição X que o tubo de cima aparecerá inicialmente no background
         width = self.__width + (self.__imageWidth)
 
@@ -95,9 +92,11 @@ class Tubes(Thread):
 
         height = randint(self.__imageHeight // 2, self.__height - (self.__bird_h * 2) - self.__imageHeight)
 
-        # Cria e adiciona à lista do corpo do tubo de cima, a boca do tubo
-        tube1.append(self.__background.create_image(width, height, image=self.__background.tubeImages[1]))
-
+        tube1 = [
+            self.__background.create_image(
+                width, height, image=self.__background.tubeImages[1]
+            )
+        ]
         # Cria uma nova imagem na lista de imagens com a altura sendo igual a posição Y do tubo de cima
         self.__background.tubeImages[0].append(
             [self.getPhotoImage(image=self.__background.tubeImages[2], width=self.__imageWidth, height=height)[0], ]
@@ -109,18 +108,14 @@ class Tubes(Thread):
         # Cria e adiciona à lista do corpo do tubo de cima, o corpo do tubo
         tube1.append(self.__background.create_image(width, y, image=self.__background.tubeImages[0][-1][0]))
 
-        ###############################################################################################################
-        ###############################################################################################################
-
-        # Cria uma lista para armazenar as partes do corpo do tubo de baixo
-        tube2 = []
-
         # A posição Y do tubo de baixo é calculada com base na posição do tubo de cima, mais o tamanho do pássaro
         height = height + (self.__bird_h * 2) + self.__imageHeight - 1
 
-        # Cria e adiciona à lista do corpo do tubo de baixo, a boca do tubo
-        tube2.append(self.__background.create_image(width, height, image=self.__background.tubeImages[1]))
-
+        tube2 = [
+            self.__background.create_image(
+                width, height, image=self.__background.tubeImages[1]
+            )
+        ]
         # Define a altura da imagem do corpo do tubo de baixo
         height = self.__height - height
 
@@ -218,15 +213,17 @@ class Tubes(Thread):
                     # Se a posição "x2" do tubo for menor que a posição "x1" do pássaro e se ainda não tiver sido
                     # pontuado este mesmo cano, o método para pontuar será chamado.
 
-                    if (self.__width / 2) - (self.__bird_w / 2) - self.__move < x2:
-                        if x2 <= (self.__width / 2) - (self.__bird_w / 2):
-
-                            # Verifica se o tubo está na lista de tubos passados
-                            if not tube[0] in self.__pastTubes:
-                                # Chama o método para pontuar e adiciona o tubo pontuado à lista de tubos passados
-                                self.__score_method()
-                                self.__pastTubes.append(tube[0])
-                                scored = True
+                    if (self.__width / 2) - (
+                        self.__bird_w / 2
+                    ) - self.__move < x2 <= (self.__width / 2) - (
+                        self.__bird_w / 2
+                    ) and tube[
+                        0
+                    ] not in self.__pastTubes:
+                        # Chama o método para pontuar e adiciona o tubo pontuado à lista de tubos passados
+                        self.__score_method()
+                        self.__pastTubes.append(tube[0])
+                        scored = True
 
                 # Move cada parte do copo do tubo no background
                 for body in tube:

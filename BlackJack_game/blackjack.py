@@ -16,9 +16,9 @@ random.shuffle(deck)
 
 print('********************************************************** \n Welcome to the game Casino - BLACK JACK ! \n**********************************************************')
 time.sleep(2)
-print('So Finally You Are Here To Accept Your Fate') 
+print('So Finally You Are Here To Accept Your Fate')
 time.sleep(2)
-print('I Mean Your Fortune') 
+print('I Mean Your Fortune')
 time.sleep(2)
 print('Lets Check How Lucky You Are  Wish You All The Best')
 time.sleep(2)
@@ -58,9 +58,9 @@ if sum(d_cards) == 21:
     print("***********************Dealer is the Winner !!******************")
     exit()
 
-if sum(d_cards) == 21 and sum(p_cards) == 21:
-    print("*****************The match is tie !!*************************")
-    exit()
+    if sum(p_cards) == 21:
+        print("*****************The match is tie !!*************************")
+        exit()
 
 # function to show the dealer's choice
 def dealer_choice():
@@ -69,20 +69,17 @@ def dealer_choice():
             random.shuffle(deck)
             d_cards.append(deck.pop())
 
-    print("Dealer has total " + str(sum(d_cards)) + "with the cards ", d_cards)
+    print(f"Dealer has total {str(sum(d_cards))}with the cards ", d_cards)
 
     if sum(p_cards) == sum(d_cards):
         print("***************The match is tie !!****************")
         exit()
 
     if sum(d_cards) == 21:
-        if sum(p_cards) < 21:
+        if sum(p_cards) < 21 or sum(p_cards) != 21:
             print("***********************Dealer is the Winner !!******************")
-        elif sum(p_cards) == 21:
-            print("********************There is tie !!**************************")
         else:
-            print("***********************Dealer is the Winner !!******************")
-
+            print("********************There is tie !!**************************")
     elif sum(d_cards) < 21:
         if sum(p_cards) < 21 and sum(p_cards) < sum(d_cards):
             print("***********************Dealer is the Winner !!******************")
@@ -91,13 +88,10 @@ def dealer_choice():
         if sum(p_cards) < 21 and sum(p_cards) > sum(d_cards):
             print("**********************Player is winner !!**********************")
 
+    elif sum(p_cards) < 21 or sum(p_cards) == 21:
+        print("**********************Player is winner !!**********************")
     else:
-        if sum(p_cards) < 21:
-            print("**********************Player is winner !!**********************")
-        elif sum(p_cards) == 21:
-            print("**********************Player is winner !!**********************")
-        else:
-            print("***********************Dealer is the Winner !!******************")
+        print("***********************Dealer is the Winner !!******************")
 
 
 while sum(p_cards) < 21:
@@ -107,8 +101,7 @@ while sum(p_cards) < 21:
     if k == 1:
         random.shuffle(deck)
         p_cards.append(deck.pop())
-        print('You have a total of ' + str(sum(p_cards))
-              + ' with the cards ', p_cards)
+        print(f'You have a total of {str(sum(p_cards))} with the cards ', p_cards)
         if sum(p_cards) > 21:
             print('*************You are BUSTED !*************\n Dealer Wins !!')
         if sum(p_cards) == 21:

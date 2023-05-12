@@ -37,7 +37,7 @@ def startDownload():
         dfile_size = file_size
         dfile_size /= 1000000
         dfile_size = round(dfile_size, 2)
-        label.config(text='Size: ' + str(dfile_size) + ' MB')
+        label.config(text=f'Size: {str(dfile_size)} MB')
         label.pack(side=TOP, pady=10)
         desc.config(text=ob.title + '\n\n' + 'Label: ' + ob.author + '\n\n' + 'length: ' + str(round(ob.length/60, 1)) + ' mins\n\n'
                     'Views: ' + str(round(ob.views/1000000, 2)) + 'M')

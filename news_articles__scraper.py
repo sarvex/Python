@@ -9,6 +9,7 @@ Original file is located at
 ***Uncomment the line to install newspaper3k first***
 """
 
+
 # ! pip install newspaper3k
 
 # importing necessary libraries
@@ -24,7 +25,7 @@ import sys
 # Extracting links for all the pages (1 to 158) of boomlive fake news section
 fakearticle_links = []
 for i in range(1, 159):
-  url = 'https://www.boomlive.in/fake-news/' + str(i)
+  url = f'https://www.boomlive.in/fake-news/{str(i)}'
   try:
     # this might throw an exception if something goes wrong.
     page=requests.get(url) 
@@ -37,7 +38,7 @@ for i in range(1, 159):
     for content in soup.find_all('h2', attrs={'class':'entry-title'}):
       link = content.find('a')
       fakearticle_links.append(link.get('href')) 
-  
+
   # this describes what to do if an exception is thrown 
   except Exception as e:    
     # get the exception information
@@ -90,7 +91,7 @@ for Url in fakearticle_links:
     article.nlp()
   except:
     pass
-  
+
   # Scrape the contents of article
   title.append(article.title)                    # extracts the title of the article
   text.append(article.text)                      # extracts the whole text of article
@@ -141,8 +142,8 @@ TOIarticle_links = []  # Creating an empty list of all the urls of news from Tim
 
 # Extracting links for all the pages (2 to 125) of boomlive fake news section
 for i in range(2, 126):
-  url = 'https://timesofindia.indiatimes.com/news/' + str(i)
-  
+  url = f'https://timesofindia.indiatimes.com/news/{str(i)}'
+
   try:
     # send requests
     page = requests.get(url)
@@ -152,7 +153,7 @@ for i in range(2, 126):
     for content in soup.find_all('span', attrs={'class':'w_tle'}):
       link = content.find('a')
       TOIarticle_links.append(link.get('href')) 
-  
+
   # this describes what to do if an exception is thrown 
   except Exception as e:    
     # get the exception information
@@ -185,7 +186,7 @@ for Url in TOIarticle_links:
     article.nlp()
   except:
     pass
-  
+
   # Scrape the contents of article
   title.append(article.title)                    # extracts the title of the article
   text.append(article.text)                      # extracts the whole text of article

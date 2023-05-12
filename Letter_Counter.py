@@ -12,7 +12,7 @@ def printt():
 
     # Get the count and display results.
     letter_count = message.count(letter)
-    a = "your message has " + str(letter_count) + " " + letter + "'s in it."
+    a = f"your message has {str(letter_count)} {letter}'s in it."
     labl = tk.Label(root,text=a,font=('arial',15),fg='black').place(x=10,y=220)
 lbl = tk.Label(root,text="Enter the Message--",font=('Ubuntu',15),fg='black').place(x=10,y=10)
 lbl1 = tk.Label(root,text="Enter the Letter you want to count--",font=('Ubuntu',15),fg='black').place(x=10,y=80)

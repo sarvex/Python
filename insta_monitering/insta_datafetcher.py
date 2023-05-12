@@ -26,7 +26,7 @@ except:
 class PorxyApplyingDecorator(object):
 
     def __init__(self):
-        filename = os.getcwd() + "/" + "ipList.txt"
+        filename = f"{os.getcwd()}/ipList.txt"
         with open(filename, "r") as f:
             ipdata = f.read()
         self._IP = random.choice(ipdata.split(","))
@@ -101,12 +101,12 @@ class MoniteringClass():
 
         try:
             self.mon = pymongo.MongoClient(host=config.host, port=config.mongoPort)
-            db = self.mon[productId + ":" + user + ":insta"]
+            db = self.mon[f"{productId}:{user}:insta"]
             self._collection = db[tags]
             if type == "hashtags":
-                self._url = "https://www.instagram.com/explore/tags/" + tags + "/?__a=1"
-            if type == "profile":
-                self._url = "https://www.instagram.com/" + tags + "/?__a=1"
+                self._url = f"https://www.instagram.com/explore/tags/{tags}/?__a=1"
+            elif type == "profile":
+                self._url = f"https://www.instagram.com/{tags}/?__a=1"
         except:
             print("error::MointeringClass.__init__>>", sys.exc_info()[1])
 
@@ -122,9 +122,10 @@ class MoniteringClass():
             print("top_post::", len(top_post))
             futures = []
             for i in media_post:
-                tempdict = {}
-                tempdict["url"] = "https://www.instagram.com/p/" + i["code"] + "/"
-                tempdict["code"] = i["code"]
+                tempdict = {
+                    "url": "https://www.instagram.com/p/" + i["code"] + "/",
+                    "code": i["code"],
+                }
                 userdata.append(tempdict)
             for i in top_post:
                 tempdict = {}
@@ -166,7 +167,7 @@ class MoniteringClass():
                         tofind = ["owner", "location"]
                         for z in tofind:
                             try:
-                                tempdict[z + "data"] = i["data"][z]
+                                tempdict[f"{z}data"] = i["data"][z]
                             except:
                                 pass
                         mainlist.append(tempdict)
@@ -177,7 +178,7 @@ class MoniteringClass():
                         tofind = ["owner", "location"]
                         for z in tofind:
                             try:
-                                tempdict[z + "data"] = i["data"][z]
+                                tempdict[f"{z}data"] = i["data"][z]
                             except:
                                 pass
                         mainlist.append(tempdict)
@@ -250,10 +251,7 @@ class InstaPorcessClass():
         try:
             db = mon["insta_process"]
             collection = db["process"]
-            temp = {}
-            temp["user"] = user
-            temp["tags"] = tags
-            temp["productId"] = productId
+            temp = {"user": user, "tags": tags, "productId": productId}
             records = collection.find(temp).count()
             if records == 0:
                 raise Exception
@@ -270,10 +268,7 @@ class InstaPorcessClass():
         try:
             db = mon["insta_process"]
             collection = db["process"]
-            temp = {}
-            temp["user"] = user
-            temp["tags"] = tags
-            temp["productId"] = productId
+            temp = {"user": user, "tags": tags, "productId": productId}
             collection.insert(temp)
         except:
             print("error::processstart>>", sys.exc_info()[1])
@@ -301,10 +296,7 @@ class InstaPorcessClass():
         try:
             db = mon["insta_process"]
             collection = db["process"]
-            temp = {}
-            temp["user"] = user
-            temp["tags"] = tags
-            temp["productId"] = productId
+            temp = {"user": user, "tags": tags, "productId": productId}
             collection.delete_one(temp)
         except:
             print("error::deletProcess:>>", sys.exc_info()[1])
@@ -318,15 +310,9 @@ class InstaPorcessClass():
         try:
             db = mon["insta_process"]
             collection = db["process"]
-            temp = {}
-            temp["user"] = user
-            temp["tags"] = tags
-            temp["productId"] = productId
+            temp = {"user": user, "tags": tags, "productId": productId}
             records = collection.find(temp).count()
-            if records == 0:
-                result = False
-            else:
-                result = True
+            result = records != 0
         except:
             print("error::dbProcessReader:>>", sys.exc_info()[1])
         finally:
@@ -339,7 +325,7 @@ class DBDataFetcher():
     def __init__(self, user, tags, type, productId):
         try:
             self.mon = pymongo.MongoClient(host=config.host, port=config.mongoPort)
-            db = self.mon[productId + ":" + user + ":insta"]
+            db = self.mon[f"{productId}:{user}:insta"]
             self._collection = db[tags]
         except:
             print("error::DBDataFetcher.init>>", sys.exc_info()[1])

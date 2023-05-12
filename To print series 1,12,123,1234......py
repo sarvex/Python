@@ -11,25 +11,18 @@ def num(a):
 
     # re assigning num  
 
-       num = 1
+      num = 1
 
- # inner loop to handle number of columns  
-
-           # values changing acc. to outer loop  
-
-       for k in range(0, i+1):  
-
+      for _ in range(0, i+1):
          # printing number  
 
-           print(num, end=" ")  
+         print(num, end=" ")  
 
-            # incrementing number at each column  
-
-           num = num + 1    
+         num = num + 1    
 
 # ending line after each row  
 
-       print("\r")  
+      print("\r")  
 
 # Driver code
 

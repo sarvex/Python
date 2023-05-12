@@ -107,7 +107,6 @@ class Case:
         self.a = [0]
         self.try_forget()
         self.retrieve_home()
-        pass
 
     def display(self):
         self.y_scroll = Scrollbar(gui)
@@ -273,9 +272,7 @@ class Case:
             self.char_lis = list(self.char_list.get().split())
             if self.char_lis[0] == '(Space':
                 return
-        except IndexError:
-            return
-        except ValueError:
+        except (IndexError, ValueError):
             return
         except AttributeError:
             pass
@@ -375,7 +372,7 @@ class Type1(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.output.insert(END, self.n)
             self.output.insert(END, '\n')
@@ -408,7 +405,7 @@ class Type2(Case):                                      # Type 2
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.m = randint(self.m_min, self.m_max)
             self.output.insert(END, self.n)
@@ -442,7 +439,7 @@ class Type3(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.a = randint(self.a_min, self.a_max)
             self.b = randint(self.b_min, self.b_max)
             self.output.insert(END, self.a)
@@ -475,7 +472,7 @@ class Type4(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.m = randint(self.m_min, self.m_max)
             self.output.insert(END, self.n)
@@ -522,7 +519,7 @@ class Type5(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.m = randint(self.m_min, self.m_max)
             self.k = randint(self.k_min, self.k_max)
@@ -562,7 +559,7 @@ class Type6(Case):
         self.output.insert(END, ' ')
         self.output.insert(END, self.m)
         self.output.insert(END, '\n')
-        for i in range(self.n):
+        for _ in range(self.n):
             self.a = [0] * self.m
             for j in range(self.m):
                 self.a[j] = randint(self.a_min, self.a_max)
@@ -591,7 +588,7 @@ class Type7(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.output.insert(END, self.n)
             self.output.insert(END, '\n')
@@ -623,14 +620,14 @@ class Type8(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.m = randint(self.m_min, self.m_max)
             self.output.insert(END, self.n)
             self.output.insert(END, ' ')
             self.output.insert(END, self.m)
             self.output.insert(END, '\n')
-            for j in range(self.m):
+            for _ in range(self.m):
                 self.a = randint(self.a_min, self.a_max)
                 self.b = randint(self.b_min, self.b_max)
                 self.output.insert(END, self.a)
@@ -659,7 +656,7 @@ class Type9(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.a = choices(self.char_lis, k=self.n)
             self.output.insert(END, ''.join(self.a))
@@ -689,7 +686,7 @@ class Type10(Case):
         self.output.delete('1.0', END)
         self.output.insert(END, self.t)
         self.output.insert(END, '\n')
-        for i in range(self.t):
+        for _ in range(self.t):
             self.n = randint(self.n_min, self.n_max)
             self.k = randint(self.k_min, self.k_max)
             self.m = randint(self.m_min, self.m_max)

@@ -9,8 +9,6 @@ def SOUNDEX(TERM: str):
 
     #List the Remove occurrences of A, E, I, O, U, Y, H, W.
     Remove_List = ('A', 'E', 'I', 'O', 'U', 'Y', 'H', 'W')
-    # Save the first letter
-    first_letter = TERM_LETTERS[0]
     #Take the Other letters instead of First_Letter
     Characters = TERM_LETTERS[1:]
     #Remove items from Character using Remove_List
@@ -39,11 +37,13 @@ def SOUNDEX(TERM: str):
 
     #If the saved Characters’s Number is the same the resulting First Letter,keep the First Letter AND remove the Number
     if len(TERM_LETTERS)!=1:
+        # Save the first letter
+        first_letter = TERM_LETTERS[0]
         if first_letter == TERM_LETTERS[1]:
             Characters[0] = TERM[0]
         else:
             Characters.insert(0, first_letter)
-   
+
     #If the Number of Characters are less than 4 insert 3 zeros to Characters
     # Remove all except first letter and 3 digits after it.
     #first_letter = Characters[0]
@@ -53,7 +53,6 @@ def SOUNDEX(TERM: str):
     while len(Characters) < 4:
         Characters.append(0)
     if len(Characters) > 4:
-        Characters=Characters[0:4]
-    
-    INDEX = "".join([str(C) for C in Characters])
-    return INDEX
+        Characters = Characters[:4]
+
+    return "".join([str(C) for C in Characters])

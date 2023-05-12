@@ -21,12 +21,24 @@ def getWeather():
     wind = soup.find('span',class_='_1Va1P undefined').text
     pressure = soup.find('span',class_='_3olKd undefined').text
     locationlabel.config(text=(location))
-    templabel.config(text = temperature+"C")
-    WeatherText = "Sunrise : "+sunrise+"\n"+"SunSet : "+sunset+"\n"+"Pressure : "+pressure+"\n"+"Wind : "+wind+"\n"
+    templabel.config(text=f"{temperature}C")
+    WeatherText = (
+        f"Sunrise : {sunrise}"
+        + "\n"
+        + "SunSet : "
+        + sunset
+        + "\n"
+        + "Pressure : "
+        + pressure
+        + "\n"
+        + "Wind : "
+        + wind
+        + "\n"
+    )
     weatherPrediction.config(text=WeatherText)
     airqualityText = airquality + " "*5 + airqualitytitle + "\n"
     airqualitylabel.config(text = airqualityText)
-    
+
     weatherPrediction.after(120000,getWeather)
     root.update()
     

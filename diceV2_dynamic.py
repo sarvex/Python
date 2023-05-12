@@ -24,12 +24,11 @@ class Dice:
 # This implementation can be improved greatly of course.
 def checkInput(sides):
     try:
-        if int(sides) != 0:
-            if float(sides) % int(sides) == 0:  # excludes the possibility of inputted floats being rounded.
-                return int(sides)
-        else:
+        if int(sides) == 0:
             return int(sides)
 
+        if float(sides) % int(sides) == 0:  # excludes the possibility of inputted floats being rounded.
+            return int(sides)
     except:
         print("Invalid input!")
         return None
@@ -42,11 +41,10 @@ def pickNumber(item, question_string, lower_limit):
         item = input(question_string)
         item = checkInput(item)
         if type(item) == int:
-            if item <= lower_limit:
-                print("Input too low!")
-                continue
-            else:
+            if item > lower_limit:
                 return item
+            print("Input too low!")
+            continue
 
 
 # Main-function of the program that sets up the dices for the user as they want them.
@@ -60,7 +58,7 @@ def getDices():
     sides = pickNumber(sides, "How many sides will the dices have?: ", sideLowerLimit)
     diceAmount = pickNumber(diceAmount, "How many dices will do you want?: ", diceLowerLimit)
 
-    for i in range(0, diceAmount):
+    for _ in range(0, diceAmount):
         d = Dice()
         d.setSides(sides)
         dices.append(d)

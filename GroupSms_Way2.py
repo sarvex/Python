@@ -41,7 +41,9 @@ except IOError:
 jession_id = str(cj).split('~')[1].split(' ')[0]
 send_sms_url = 'http://site24.way2sms.com/smstoss.action?'
 
-opener.addheaders = [('Referer', 'http://site25.way2sms.com/sendSMS?Token=%s' % jession_id)]
+opener.addheaders = [
+    ('Referer', f'http://site25.way2sms.com/sendSMS?Token={jession_id}')
+]
 
 try:
     for number in num:

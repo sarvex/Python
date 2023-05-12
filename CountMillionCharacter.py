@@ -6,6 +6,7 @@ that number appears in the triple quoted string.
 Credit to William J. Turkel and Adam Crymble for the word
 frequency code used below. I just merged the two ideas.
 """
+
 import re
 
 pattern = re.compile("\W") #re is used to compile the expression more than once
@@ -306,7 +307,7 @@ for x, y in enumerate(wordlist):
 
 wordfreq = [wordlist.count(w) for w in wordlist]  #counts frequency of a letter in the given list
 
-print("String\n {} \n".format(wordstring))
-print("List\n {} \n".format(str(wordlist)))
-print("Frequencies\n {} \n".format(str(wordfreq)))
-print("Pairs\n {}".format(str(dict(zip(wordlist, wordfreq)))))
+print(f"String\n {wordstring} \n")
+print(f"List\n {wordlist} \n")
+print(f"Frequencies\n {wordfreq} \n")
+print(f"Pairs\n {dict(zip(wordlist, wordfreq))}")

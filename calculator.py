@@ -46,7 +46,7 @@ def calc(term):
     term = term.replace('rad', 'radians')
     term = term.replace('mod', '%')
     term = term.replace('aval', 'abs')
-    
+
     functions = ['sin', 'cos', 'tan', 'pow', 'cosh', 'sinh', 'tanh', 'sqrt', 'pi', 'radians', 'e']
 
     # This part is for reading and converting function expressions.
@@ -54,7 +54,7 @@ def calc(term):
 
     for func in functions:
         if func in term:
-            withmath = 'math.' + func
+            withmath = f'math.{func}'
             term = term.replace(func, withmath)
 
     try:
@@ -100,19 +100,14 @@ def main():
     print("\nScientific Calculator\n\nFor Example: sin(rad(90)) + 50% * (sqrt(16)) + round(1.42^2)" +
           "- 12mod3\n\nEnter quit to exit")
 
-    if sys.version_info.major >= 3:
-        while True:
+    while True:
+        if sys.version_info.major >= 3:
             k = input("\nWhat is ")
-            if k == 'quit':
-                break
-            result(k)
-
-    else:
-        while True:
+        else:
             k = raw_input("\nWhat is ")
-            if k == 'quit':
-                break
-            result(k)
+        if k == 'quit':
+            break
+        result(k)
 
 
 if __name__ == '__main__':

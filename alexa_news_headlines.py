@@ -20,7 +20,7 @@ def get_headlines():
     html = sess.get(url)
     data = json.loads(html.content.decode("utf-8"))
     titles = [unidecode.unidecode(listing['data']['title']) for listing in data['data']['children']]
-    titles = '... '.join([i for i in titles])
+    titles = '... '.join(list(titles))
     return titles
 
 
@@ -38,7 +38,7 @@ def start_skill():
 @ask.intent("YesIntent")
 def share_headlines():
     headlines = get_headlines()
-    headline_msg = "The current world news headlines are {}".format(headlines)
+    headline_msg = f"The current world news headlines are {headlines}"
     return statement(headline_msg)
 
 

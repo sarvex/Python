@@ -10,8 +10,7 @@ def Representational(r, g, b):
 
 def calculate(img):
     b, g, r = cv2.split(img)
-    pixelAt = Representational(r, g, b)
-    return pixelAt
+    return Representational(r, g, b)
 
 
 def main():
@@ -33,7 +32,7 @@ def main():
     # MSR = error_sum/(height*width)
     PSNR = -(10 * math.log10(error / (255 * 255)))
 
-    print("PSNR value is {}".format(PSNR))
+    print(f"PSNR value is {PSNR}")
 
 
 if __name__ == '__main__':

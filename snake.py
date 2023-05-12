@@ -23,9 +23,8 @@ try:
     x,y=win.getmaxyx()
     key = KEY_DOWN  # Initializing values
     score = 0
-    s = open('.snake_highscore.txt', 'r')
-    hscore = s.read()
-    s.close()
+    with open('.snake_highscore.txt', 'r') as s:
+        hscore = s.read()
     snake = [[4, 10], [4, 9], [4, 8]]  # Initial snake co-ordinates
     food = [10, 20]  # First food co-ordinates
 
@@ -33,9 +32,9 @@ try:
 
     while key != 27:  # While Esc key is not pressed
         win.border(0)
-        win.addstr(0, 2, 'Score : ' + str(score) + ' ')  # Printing 'Score' and
+        win.addstr(0, 2, f'Score : {str(score)} ')
         win.addstr(0, 27, ' SNAKE ')  # 'SNAKE' strings
-        win.addstr(0, 37, 'Highscore: ' + str(hscore) + ' ')
+        win.addstr(0, 37, f'Highscore: {str(hscore)} ')
 
         win.timeout(
             int(150 - (len(snake) / 5 + len(snake) / 10) % 120))  # Increases the speed of Snake as its length increases
@@ -76,7 +75,7 @@ try:
         if snake[0] == food:  # When snake eats the food
             food = []
             score += 1
-            while food == []:
+            while not food:
                 food = [randint(1, 18), randint(1, 58)]  # Calculating next food's coordinates
                 if food in snake: food = []
             win.addch(food[0], food[1], '*')
@@ -85,18 +84,15 @@ try:
             win.addch(last[0], last[1], ' ')
         win.addch(snake[0][0], snake[0][1], '#')
 
-    
+
 except KeyboardInterrupt or EOFError:
     curses.endwin()
-    print( "Score - " + str(score))
+    print(f"Score - {str(score)}")
     if score > int(hscore):
-        s = open('.snake_highscore.txt', 'w')
-        s.write(str(score))
-        s.close()
-
+        with open('.snake_highscore.txt', 'w') as s:
+            s.write(str(score))
 curses.endwin()
 if score > int(hscore):
-    s = open('.snake_highscore.txt', 'w')
-    s.write(str(score))
-    s.close()
-print("Score - " + str(score))
+    with open('.snake_highscore.txt', 'w') as s:
+        s.write(str(score))
+print(f"Score - {str(score)}")

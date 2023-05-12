@@ -11,16 +11,15 @@ except ImportError:
 def checkInternetConnectivity():
     try:
         url = argv[1]
-        if 'https://' or 'http://' not in url:
-            url = 'https://' + url
+        url = f'https://{url}'
     except:
         url = 'https://google.com'
     try:
-         urlopen(url, timeout=2)
-         print("Connection to \""+ url + "\" is working")
-        
+        urlopen(url, timeout=2)
+        print("Connection to \""+ url + "\" is working")
+
     except URLError as E:
-        print("Connection error:%s" % E.reason)
+        print(f"Connection error:{E.reason}")
 
 
 checkInternetConnectivity()

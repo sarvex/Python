@@ -6,7 +6,12 @@ class Colour:
     GREEN = '\033[32m'
     END = '\033[0m'
 
-suits = (Colour.RED +  'Hearts' + Colour.END, Colour.RED + 'Diamonds' + Colour.END, Colour.BLACK + 'Spades' + Colour.END, Colour.BLACK + 'Clubs' + Colour.END)
+suits = (
+    f'{Colour.RED}Hearts{Colour.END}',
+    f'{Colour.RED}Diamonds{Colour.END}',
+    f'{Colour.BLACK}Spades{Colour.END}',
+    f'{Colour.BLACK}Clubs{Colour.END}',
+)
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
 values = {'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8,
           'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10, 'Ace': 11}
@@ -20,7 +25,7 @@ class Card:
         self.rank = rank
 
     def __str__(self):
-        return self.rank + ' of ' + self.suit
+        return f'{self.rank} of {self.suit}'
 
 
 class Deck:
@@ -28,20 +33,16 @@ class Deck:
     def __init__(self):
         self.deck = []
         for suit in suits:
-            for rank in ranks:
-                self.deck.append(Card(suit, rank))
+            self.deck.extend(Card(suit, rank) for rank in ranks)
 
     def __str__(self):
-        deck_comp = ''
-        for card in self.deck:
-            deck_comp += '\n ' + card.__str__()
+        deck_comp = ''.join('\n ' + card.__str__() for card in self.deck)
 
     def shuffle(self):
         random.shuffle(self.deck)
 
     def deal(self):
-        single_card = self.deck.pop()
-        return single_card
+        return self.deck.pop()
 
 
 class Hand:

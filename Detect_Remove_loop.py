@@ -31,9 +31,9 @@ class Linked_List:
 
     def Remove_loop(self, Loop_node):
         ptr1 = self.head
-        while(1):
+        while 1:
             ptr2 = Loop_node
-            while(ptr2.next != Loop_node and ptr2.next != ptr1):
+            while ptr2.next not in [ptr2, ptr1]:
                 ptr2 = ptr2.next
             if ptr2.next == ptr1:
                 break

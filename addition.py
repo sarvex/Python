@@ -3,8 +3,8 @@ print()
 
 a=True
 
-while a==True:
-    
+while a:
+
     number1=int(input("enter first number:"))
     number2=int(input("enter second number:"))
     number3=int(input("enter third number:"))
@@ -13,7 +13,7 @@ while a==True:
     print()
     print("\t\t======================================")
     print()
-    
+
     print("Addition of three numbers is"," :-- ",sum)
 
     print()
@@ -21,15 +21,15 @@ while a==True:
     print()
 
     d=input("Do tou want to do it again ??   Y / N -- ").lower()
-    
+
     if d=='y':
 
         print()
         print("\t\t======================================")
         print()
-        
+
         continue
-    
+
     else:
 
         exit()

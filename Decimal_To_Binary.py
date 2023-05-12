@@ -4,13 +4,13 @@ decimal_accuracy = 7
 
 def dtbconverter(num): 
 
-    whole = [] 
+    whole = []
     fractional = ['.']  
 
-    decimal = round(num % 1, decimal_accuracy) 
+    decimal = round(num % 1, decimal_accuracy)
     w_num = int(num) 
 
-    i = 0  
+    i = 0
     while (decimal != 1 and i < decimal_accuracy):
         decimal = decimal * 2
         fractional.append(int(decimal // 1))
@@ -21,17 +21,13 @@ def dtbconverter(num):
 
     while (w_num != 0):
         whole.append(w_num % 2)
-        w_num = w_num // 2
+        w_num //= 2
     whole.reverse()
-    
-    i=0
-    while(i<len(whole)):
-        print(whole[i],end="")
-        i+=1
-    i=0
-    while(i<len(fractional)):
-        print(fractional[i],end="")
-        i+=1
+
+    for item_ in whole:
+        print(item_, end="")
+    for item in fractional:
+        print(item, end="")
     
     
 number = float(input("Enter Any base-10 Number: "))

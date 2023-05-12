@@ -23,10 +23,10 @@ li = ["s", "w", "g"]
 system("clear")
 b = input(bcolors.OKBLUE + bcolors.BOLD + "Welcome to the game 'Snake-Water-Gun'.\nWanna play? Type Y or N: " + bcolors.ENDC).capitalize()
 
-if b == "N" :
+if b == "N":
     run = False
     print("Ok bubyeee! See you later")
-elif b=="Y" or b=="y":
+elif b in ["Y", "y"]:
     print("There will be 10 matches and the one who won max matches will win Let's start")
 
 i = 0
@@ -38,37 +38,37 @@ while run and i<10:
     user_choice = input("Type s for snake,w for water or g for gun: ").lower()
 
     if user_choice == comp_choice:
-        print(bcolors.HEADERS + "Game draws.Play again" + bcolors.ENDC)
+        print(f"{bcolors.HEADERS}Game draws.Play again{bcolors.ENDC}")
 
     elif user_choice == "s" and comp_choice == "g":
-        print(bcolors.FAIL +"It's Snake v/s Gun You lose!" + bcolors.ENDC)
+        print(f"{bcolors.FAIL}It's Snake v/s Gun You lose!{bcolors.ENDC}")
 
     elif user_choice == "s" and comp_choice == "w":
-        print(bcolors.OKGREEN + "It's Snake v/s Water. You won" + bcolors.ENDC)
+        print(f"{bcolors.OKGREEN}It's Snake v/s Water. You won{bcolors.ENDC}")
         score += 1 
 
     elif user_choice == "w" and comp_choice == "s":
-        print(bcolors.FAIL +"It's Water v/s Snake You lose!" + bcolors.ENDC)
+        print(f"{bcolors.FAIL}It's Water v/s Snake You lose!{bcolors.ENDC}")
 
     elif user_choice == "w" and comp_choice == "g":
-        print(bcolors.OKGREEN + "It's Water v/s Gun. You won" + bcolors.ENDC)
+        print(f"{bcolors.OKGREEN}It's Water v/s Gun. You won{bcolors.ENDC}")
         score +=1
 
     elif user_choice == "g" and comp_choice == "w":
-        print(bcolors.FAIL +"It's Gun v/s Water You lose!" + bcolors.ENDC)
+        print(f"{bcolors.FAIL}It's Gun v/s Water You lose!{bcolors.ENDC}")
 
     elif user_choice == "g" and comp_choice == "s":
-        print(bcolors.OKGREEN + "It's Gun v/s Snake. You won" + bcolors.ENDC)
+        print(f"{bcolors.OKGREEN}It's Gun v/s Snake. You won{bcolors.ENDC}")
         score += 1
 
     else:
         print("Wrong input")
         continue
-    
+
     i += 1
     print(f"{10-i} matches left")
 
-if run == True:
+if run:
     print(f"Your score is {score} and the final result is...")
     time.sleep(3)
     if score > 5:

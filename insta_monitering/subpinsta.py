@@ -7,8 +7,8 @@ import sys
 def instasubprocess(user, tags, type, productId):
     try:
         child_env = sys.executable
-        file_pocessing = os.getcwd() + "/insta_datafetcher.py " + user + " " + tags + " " + type + " " + productId
-        command = child_env + " " + file_pocessing
+        file_pocessing = f"{os.getcwd()}/insta_datafetcher.py {user} {tags} {type} {productId}"
+        command = f"{child_env} {file_pocessing}"
         result = subprocess.Popen(command, shell=True)
         result.wait()
     except:
